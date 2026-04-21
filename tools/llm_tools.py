@@ -36,7 +36,7 @@ class _BaseIMProfileTool(FunctionTool[AstrAgentContext]):
 @pydantic_dataclass
 class IMProfileSetProfileTool(_BaseIMProfileTool):
     name: str = "im_profile_set_profile"
-    description: str = "修改 Bot 在 QQ 平台上的基础资料（昵称、资料签名、性别）。"
+    description: str = "修改 Bot 在 QQ 平台上的基础资料（昵称、个性签名、性别）。"
     parameters: dict = Field(
         default_factory=lambda: {
             "type": "object",
@@ -47,7 +47,7 @@ class IMProfileSetProfileTool(_BaseIMProfileTool):
                 },
                 "personal_note": {
                     "type": "string",
-                    "description": "可选。新的资料签名。",
+                    "description": "可选。新的个性签名。",
                 },
                 "sex": {
                     "type": "string",
@@ -88,7 +88,7 @@ class IMProfileSetAvatarTool(_BaseIMProfileTool):
             "properties": {
                 "avatar_url": {
                     "type": "string",
-                    "description": "头像文件 URL（NapCat 支持的地址格式）。",
+                    "description": "头像文件 URL 。",
                 }
             },
             "required": ["avatar_url"],
@@ -116,14 +116,14 @@ class IMProfileSetAvatarTool(_BaseIMProfileTool):
 @pydantic_dataclass
 class IMProfileSetGroupCardTool(_BaseIMProfileTool):
     name: str = "im_profile_set_group_card"
-    description: str = "修改 Bot 在当前群聊中的个人群名片。"
+    description: str = "修改 Bot 在当前群聊中的 群名片/群昵称。"
     parameters: dict = Field(
         default_factory=lambda: {
             "type": "object",
             "properties": {
                 "card": {
                     "type": "string",
-                    "description": "新的群名片文本。",
+                    "description": "新的群名片。",
                 },
                 "group_id": {
                     "type": "string",
