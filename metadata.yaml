@@ -1,0 +1,7 @@
+name: astrbot_plugin_im_profile
+display_name: 个人资料管理
+desc: 让Bot能够自己管理在消息平台上的个人资料
+version: 0.0.1
+author: Railgun19457
+repo: https://github.com/Railgun19457/astrbot_plugin_im_profile
+astrbot_version: ">=4.10.4"
