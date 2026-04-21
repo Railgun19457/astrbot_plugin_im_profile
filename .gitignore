@@ -1,0 +1,5 @@
+dev/
+__pycache__
+core/__pycache__
+platforms/__pycache__
+tools/__pycache__

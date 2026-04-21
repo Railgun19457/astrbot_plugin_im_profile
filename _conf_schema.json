@@ -1,0 +1,19 @@
+{
+  "llm_tool_options": {
+    "description": "函数工具选项",
+    "hint": "控制向 LLM 暴露的资料管理工具：profile(基础资料，含资料签名)、avatar(头像)、group_card(个人群名片)、avatar_lookup(头像查询)。未勾选项不会暴露。",
+    "type": "list",
+    "options": [
+      "profile",
+      "avatar",
+      "group_card",
+      "avatar_lookup"
+    ],
+    "default": [
+      "profile",
+      "avatar",
+      "group_card",
+      "avatar_lookup"
+    ]
+  }
+}
