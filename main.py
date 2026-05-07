@@ -30,47 +30,64 @@ class IMProfilePlugin(Star):
         self.llm_tool_options: set[str] = set()
         self.profile_service = IMProfileService()
 
-        self.context.add_llm_tools(*build_llm_tools(self))
         self._load_config()
+        self._register_llm_tools()
 
     def _load_config(self) -> None:
         self.settings = load_settings(self.config)
         self.llm_tool_options = self.settings.llm_tool_options
-        self._sync_llm_tools()
         logger.info(
             "im_profile 配置加载完成：llm_tool_options=%s",
             sorted(self.llm_tool_options),
         )
 
-    def _sync_llm_tools(self) -> None:
+    def _unregister_llm_tools(self) -> None:
+        """移除本插件注册的函数工具，避免关闭配置后仍出现在工具列表。"""
+
         tool_mgr = self.context.get_llm_tool_manager()
         im_profile_tool_names = set(self.LLM_TOOL_NAME_BY_OPTION.values())
+        tool_mgr.func_list = [
+            tool
+            for tool in tool_mgr.func_list
+            if not (
+                tool.name in im_profile_tool_names
+                and getattr(tool, "handler_module_path", None) == self.__module__
+            )
+        ]
+
+    def _register_llm_tools(self) -> None:
+        """按配置注册 im_profile 函数工具。"""
+
+        self._unregister_llm_tools()
+        if not self.llm_tool_options:
+            logger.info("im_profile 函数工具未启用，跳过注册。")
+            return
+
         enabled_tool_names = {
             self.LLM_TOOL_NAME_BY_OPTION[option]
             for option in self.llm_tool_options
             if option in self.LLM_TOOL_NAME_BY_OPTION
         }
-
-        for tool in tool_mgr.func_list:
-            module_path = getattr(tool, "handler_module_path", None)
-            from_im_profile = module_path is None or module_path == self.__module__
-            if tool.name in im_profile_tool_names and from_im_profile:
-                tool.active = tool.name in enabled_tool_names
+        tools = [
+            tool for tool in build_llm_tools(self) if tool.name in enabled_tool_names
+        ]
+        if tools:
+            self.context.add_llm_tools(*tools)
 
         logger.info(
-            "im_profile 函数工具状态：选项=%s，启用=%s",
+            "im_profile 函数工具配置：选项=%s，已注册=%s",
             sorted(self.llm_tool_options),
-            sorted(enabled_tool_names),
+            sorted(tool.name for tool in tools),
         )
 
     @filter.on_astrbot_loaded()
     async def on_astrbot_loaded(self):
-        self._sync_llm_tools()
+        self._register_llm_tools()
 
     @filter.on_plugin_loaded()
     async def on_plugin_loaded(self, metadata):
         if getattr(metadata, "module_path", None) == self.__module__:
-            self._sync_llm_tools()
+            self._register_llm_tools()
 
     async def _run_llm_tool(
         self,
