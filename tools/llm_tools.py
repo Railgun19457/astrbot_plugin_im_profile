@@ -35,7 +35,7 @@ class _BaseIMProfileTool(FunctionTool[AstrAgentContext]):
 
 @pydantic_dataclass
 class IMProfileSetProfileTool(_BaseIMProfileTool):
-    name: str = "im_profile_set_profile"
+    name: str = "set_profile"
     description: str = "修改 Bot 在 QQ 平台上的基础资料（昵称、个性签名、性别）。"
     parameters: dict = Field(
         default_factory=lambda: {
@@ -80,7 +80,7 @@ class IMProfileSetProfileTool(_BaseIMProfileTool):
 
 @pydantic_dataclass
 class IMProfileSetAvatarTool(_BaseIMProfileTool):
-    name: str = "im_profile_set_avatar"
+    name: str = "set_avatar"
     description: str = "修改 Bot 在 QQ 平台上的头像。"
     parameters: dict = Field(
         default_factory=lambda: {
@@ -115,7 +115,7 @@ class IMProfileSetAvatarTool(_BaseIMProfileTool):
 
 @pydantic_dataclass
 class IMProfileSetGroupCardTool(_BaseIMProfileTool):
-    name: str = "im_profile_set_group_card"
+    name: str = "set_group_card"
     description: str = "修改 Bot 在当前群聊中的 群名片/群昵称。"
     parameters: dict = Field(
         default_factory=lambda: {
@@ -155,7 +155,7 @@ class IMProfileSetGroupCardTool(_BaseIMProfileTool):
 
 @pydantic_dataclass
 class IMProfileGetAvatarTool(_BaseIMProfileTool):
-    name: str = "im_profile_get_avatar"
+    name: str = "get_avatar"
     description: str = "获取 Bot 自身或指定 QQ 用户的头像图片与 URL。"
     parameters: dict = Field(
         default_factory=lambda: {

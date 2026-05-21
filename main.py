@@ -15,10 +15,10 @@ from .tools import build_llm_tools
 
 class IMProfilePlugin(Star):
     LLM_TOOL_NAME_BY_OPTION = {
-        "profile": "im_profile_set_profile",
-        "avatar": "im_profile_set_avatar",
-        "group_card": "im_profile_set_group_card",
-        "avatar_lookup": "im_profile_get_avatar",
+        "profile": "set_profile",
+        "avatar": "set_avatar",
+        "group_card": "set_group_card",
+        "avatar_lookup": "get_avatar",
     }
 
     def __init__(self, context: Context, config: dict[str, Any] | None = None):

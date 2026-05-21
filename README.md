@@ -20,20 +20,20 @@
 
 ### LLM Tool 列表
 
-- `im_profile_set_profile`
+- `set_profile`
   - 功能：修改基础资料（昵称、资料签名、性别）
   - 参数：`nickname`、`personal_note`、`sex`
   - `sex` 支持：`male` / `female` / `unknown`（也支持常见同义词）
 
-- `im_profile_set_avatar`
+- `set_avatar`
   - 功能：修改头像
   - 参数：`avatar_url`
 
-- `im_profile_set_group_card`
+- `set_group_card`
   - 功能：修改群内个人群名片
   - 参数：`card`、`group_id`（可选，不填默认使用当前群）
 
-- `im_profile_get_avatar`
+- `get_avatar`
   - 功能：查询头像 URL，并在可下载时返回图片内容
   - 参数：`user_id`（可选，不填默认查询 Bot 自身）
 
@@ -43,10 +43,10 @@
   - 类型：`list`
   - 默认值：`["profile", "avatar", "group_card", "avatar_lookup"]`
   - 可选值：
-    - `profile`：启用 `im_profile_set_profile`
-    - `avatar`：启用 `im_profile_set_avatar`
-    - `group_card`：启用 `im_profile_set_group_card`
-    - `avatar_lookup`：启用 `im_profile_get_avatar`
+    - `profile`：启用 `set_profile`
+    - `avatar`：启用 `set_avatar`
+    - `group_card`：启用 `set_group_card`
+    - `avatar_lookup`：启用 `get_avatar`
 
 
 ### 使用示例（自然语言）
